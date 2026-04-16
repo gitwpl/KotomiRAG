@@ -1,0 +1,6 @@
+config/
+chat_history/
+chroma_db/
+data/
+config_data.py
+__pycache__/
