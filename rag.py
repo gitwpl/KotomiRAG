@@ -53,7 +53,7 @@ class RagService(object):
         chain = (
             {
                 "input":RunnablePassthrough(),
-                "context":RunnableLambda(debug_chain)|RunnableLambda(dict_to_str)|retriever | format_document
+                "context":RunnableLambda(dict_to_str)|retriever | format_document
             } |RunnableLambda(split_userinput_and_history)| self.prompt_template | self.chat_model| StrOutputParser()
         )
 

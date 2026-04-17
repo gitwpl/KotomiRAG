@@ -18,9 +18,10 @@ if uploader_file is not None:
     st.write(f"格式: {file_type} | 大小: {file_size:.2f} KB")
 
     text:str = uploader_file.getvalue().decode("utf-8")
+    anime_name=""
     # st.write(text)
     with st.spinner("载入知识库中..."):
         time.sleep(1)
-        result = st.session_state["service"].upload_by_str(text,file_name)
+        result = st.session_state["service"].upload_by_str(text,file_name,anime_name)
         st.write(result)
 st.subheader(f"字幕网站推荐{config.subtitle}")

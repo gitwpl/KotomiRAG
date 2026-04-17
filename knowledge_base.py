@@ -7,7 +7,8 @@ from langchain_chroma import Chroma
 from langchain_community.embeddings import DashScopeEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 def check_md5(md5_str:str):
-    if not  os.path.exists(config.md5_path):
+    os.makedirs(config.md5_folder, exist_ok=True)
+    if not os.path.exists(config.md5_path):
         open(config.md5_path,"w",encoding="utf-8").close()
         return False
     else:
@@ -44,7 +45,7 @@ class KnowledgeBaseService:
             length_function=len,
         )
 
-    def upload_by_str(self,data:str,filename):
+    def upload_by_str(self,data:str,filename,anime_name):
         md5_hex = get_string_md5(data)
         if check_md5(md5_hex):
             return "[跳过]内容已存在知识库中"
@@ -66,7 +67,7 @@ class KnowledgeBaseService:
 
 
 
-if __name__ == '__main__':
-    service = KnowledgeBaseService()
-    r = service.upload_by_str("周杰伦","textfile.txt")
-    print(r)
+# if __name__ == '__main__':
+#     service = KnowledgeBaseService()
+#     r = service.upload_by_str("周杰伦","textfile.txt")
+#     print(r)
