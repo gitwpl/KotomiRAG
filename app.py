@@ -8,9 +8,9 @@ st.logo(
     icon_image="logo.png"  # 导航栏折叠时显示的小图标（可选）
 )
 
-page1 = st.Page("app_qa.py", title=config.chat)
+page1 = st.Page("app_anime.py", title=config.anime)
 page2 = st.Page("app_file_uploader.py", title=config.submit_subtitle)
-page3 = st.Page("app_anime.py", title=config.anime)
+page3 = st.Page("app_qa.py", title=config.chat)
 
 pg = st.navigation([page1, page2,page3])
 pg.run()

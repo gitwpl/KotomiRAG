@@ -16,7 +16,7 @@ class RagService(object):
         self.prompt_template = ChatPromptTemplate.from_messages(
             [
                 ("system","以我提供的参考资料为主,"
-                 "简洁和专业的回答用户的问题, 参考资料{context}"),
+                 "回答用户的问题, 参考资料{context}"),
                 ("system","并且提供用户的对话历史记录如下"),
                 MessagesPlaceholder("history"),
                 ("human","请回答用户提问:{input}")
@@ -31,7 +31,8 @@ class RagService(object):
 
     def set_anime_name(self,anime_name):
         self.anime_name = anime_name
-    def get_chain(self):
+
+    def make_chain(self):
         self.chain = self.__get_chain(is_anime=True)
 
     def __get_chain(self,is_anime=False):
