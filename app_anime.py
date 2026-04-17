@@ -1,5 +1,5 @@
 import streamlit as st
-
+import get_anime_store as get_anime_store
 st.markdown("""
 <style>
     .metric-card {
@@ -15,14 +15,14 @@ st.markdown("""
         box-shadow: 0 4px 20px rgba(0,0,0,0.12);
         border-left-width: 8px;
     }
-    .metric-title {
+    .metric-value {
         color: #666;
         font-size: 14px;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
-    .metric-value {
+    .metric-title {
         color: #333;
         font-size: 28px;
         font-weight: 700;
@@ -36,7 +36,7 @@ def card(title, value="98%", color="#4CAF50"):
         st.markdown(f'''
             <div class="metric-card" style="border-left-color: {color};">
                 <div class="metric-title">{title}</div>
-                <div class="metric-value">{value}</div>
+                <div class="metric-value">上传文件数量: {value}</div>
             </div>
         ''', unsafe_allow_html=True)
         cols_inner = st.columns([1, 1])
@@ -48,7 +48,7 @@ items = [
     ("完成率", "89%", "#FF9800"),
     ("新项目", "12", "#9C27B0")
 ]
-
+items = get_anime_store.get_anime_name_and_episode()
 for idx, (title, value, color) in enumerate(items):
     with cols[idx % 3]:
         card(title, value, color)
