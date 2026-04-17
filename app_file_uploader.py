@@ -1,9 +1,10 @@
 import time
 import streamlit as st
 from knowledge_base import KnowledgeBaseService
-st.title("知识库更新服务")
+import config_data as config
+st.title(config.submit_subtitle)
 uploader_file = st.file_uploader(
-    "请上传TXT文件",
+    f"请上传字幕文件",
     type=["txt"],
     accept_multiple_files=False,
 )
@@ -22,3 +23,4 @@ if uploader_file is not None:
         time.sleep(1)
         result = st.session_state["service"].upload_by_str(text,file_name)
         st.write(result)
+st.subheader(f"字幕网站推荐{config.subtitle}")
