@@ -9,7 +9,7 @@ from vector_stores import VectorStoreService
 from langchain_community.chat_models.tongyi import ChatTongyi
 
 class RagService(object):
-    def __init__(self):
+    def __init__(self,is_anime=False,anime_name=None):
         self.vector_service = VectorStoreService(
             embedding=DashScopeEmbeddings(model=config.embedding_model_name)
         )
@@ -22,12 +22,23 @@ class RagService(object):
                 ("human","请回答用户提问:{input}")
             ]
         )
+        self.anime_name = anime_name
         self.chat_model = ChatTongyi(model=config.chat_model_name,streaming=True)
-        self.chain = self.__get_chain()
+        if is_anime is True:
+            self.chain=self.__get_chain(is_anime=is_anime)
+        else:
+            self.chain = self.__get_chain()
 
+    def set_anime_name(self,anime_name):
+        self.anime_name = anime_name
+    def get_chain(self):
+        self.chain = self.__get_chain(is_anime=True)
 
-    def __get_chain(self):
-        retriever = self.vector_service.get_retriever()
+    def __get_chain(self,is_anime=False):
+        if is_anime is True:
+            retriever = self.vector_service.get_retriever_by_anime(anime_name=self.anime_name)
+        else:
+            retriever = self.vector_service.get_retriever()
         def format_document(docs:list[Document]):
             if not docs:
                 return "无相关参考资料"
@@ -67,15 +78,15 @@ class RagService(object):
 
 
 
-if __name__ == '__main__':
-    session_config={
-        "configurable":{
-            "session_id":"user_001"
-        }
-    }
-    chain = RagService().chain
-    result = chain.stream({"user_input":"输出100个字"},session_config)
-    for chunk in result:
-        print(chunk,end="",flush=True)
-    print("模型输出")
-    print(result)
+# if __name__ == '__main__':
+#     session_config={
+#         "configurable":{
+#             "session_id":"user_001"
+#         }
+#     }
+#     chain = RagService().chain
+#     result = chain.stream({"user_input":"输出100个字"},session_config)
+#     for chunk in result:
+#         print(chunk,end="",flush=True)
+#     print("模型输出")
+#     print(result)

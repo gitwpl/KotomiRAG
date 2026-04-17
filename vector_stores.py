@@ -10,10 +10,20 @@ class VectorStoreService(object):
         )
 
     def get_retriever(self):
-        return self.vector_store.as_retriever(search_kwargs={"k":config.similarity_threshold})
+        return self.vector_store.as_retriever(
+            search_kwargs={
+                "k":config.similarity_threshold
+            })
 
-if __name__ == "__main__":
-    from langchain_community.embeddings import DashScopeEmbeddings
-    retriever = VectorStoreService(DashScopeEmbeddings(model=config.embedding_model_name)).get_retriever()
-    res  = retriever.invoke("what is your major")
-    print(res)
+    def get_retriever_by_anime(self,anime_name):
+        return self.vector_store.as_retriever(
+            search_kwargs={
+                "k": config.similarity_threshold,
+                "filter": {"anime":anime_name}
+            })
+
+# if __name__ == "__main__":
+#     from langchain_community.embeddings import DashScopeEmbeddings
+#     retriever = VectorStoreService(DashScopeEmbeddings(model=config.embedding_model_name)).get_retriever()
+#     res  = retriever.invoke("what is your major")
+#     print(res)
