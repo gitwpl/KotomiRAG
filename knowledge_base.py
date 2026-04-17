@@ -1,6 +1,4 @@
 import os
-from datetime import datetime
-
 import config_data as config
 import hashlib
 from langchain_chroma import Chroma
@@ -55,8 +53,7 @@ class KnowledgeBaseService:
             knowledge_chunks:list[str] = [data]
         metadata = {
             "source": filename,
-            "create_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "operator":"ROKU28"
+            "anime": anime_name
         }
         self.chroma.add_texts(
             knowledge_chunks,
